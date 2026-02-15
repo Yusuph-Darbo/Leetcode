@@ -55,7 +55,7 @@ def encryption(s):
             index = row * cols + col
             
             if index < stringLength:
-                word += s[index]
+                word += newString[index]
         
         result.append(word)
             
