@@ -12,7 +12,7 @@
 # After processing all digits, reverse the result list and join into a string.
 # This produces the final binary sum.
 #
-# Time Complexity: O(len(S)) — where S is the length of the longest string
+# Time Complexity: O(n) — where n is the length of the longest string
 # Space Complexity: O(max(len(a), len(b))) — for storing the result.
 
 

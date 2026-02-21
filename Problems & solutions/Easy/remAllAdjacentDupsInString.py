@@ -14,8 +14,8 @@
 #
 # Join the stack into a string and return the result.
 #
-# Time Complexity: O(n) — 
-# Space Complexity: O(n) — 
+# Time Complexity: O(n) 
+# Space Complexity: O(n) 
 
 
 class Solution(object):
