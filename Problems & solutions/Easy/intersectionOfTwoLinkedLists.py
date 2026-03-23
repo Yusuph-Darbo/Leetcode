@@ -13,8 +13,8 @@
 #
 # Return the node where both pointers meet.
 #
-# Time Complexity: O(n + m) — each list is traversed at most twice.
-# Space Complexity: O(1) — no extra space is used.
+# Time Complexity: O(n + m)
+# Space Complexity: O(1)
 
 
 # Definition for singly-linked list.
@@ -23,6 +23,7 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution(object):
     def getIntersectionNode(self, headA, headB):
         """
@@ -30,7 +31,7 @@ class Solution(object):
         :rtype: ListNode
         """
 
-        # Make both list pointers travel the same distance 
+        # Make both list pointers travel the same distance
         ptrA = headA
         ptrB = headB
 
