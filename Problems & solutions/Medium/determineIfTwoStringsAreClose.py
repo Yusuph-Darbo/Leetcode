@@ -1,18 +1,33 @@
 # Approach:
-# Count the frequency of each character in both strings. The strings are
-# close if they contain the same set of characters and their character
-# frequencies can be rearranged to match.
+# Count the frequency of each letter using fixed-size arrays. First, verify
+# that both strings contain the same set of characters. Then sort the
+# frequency arrays and compare them to check if the character frequencies
+# can be rearranged to match.
 #
 # Time: O(n + m)
-# Space: O(n + m)
+# Space: O(1)
 
 
 class Solution:
     def closeStrings(self, word1: str, word2: str) -> bool:
-        c1 = Counter(word1)
-        c2 = Counter(word2)
+        freq1 = [0] * 26
+        freq2 = [0] * 26
 
-        f1 = Counter(c1.values())
-        f2 = Counter(c2.values())
+        for c in word1:
+            freq1[ord(c) - ord("a")] += 1
 
-        return f1 == f2 and set(word1) == set(word2)
+        for c in word2:
+            freq2[ord(c) - ord("a")] += 1
+
+        for i in range(26):
+            if (freq1[i] == 0 and freq2[i] != 0) or (freq1[i] != 0 and freq2[i] == 0):
+                return False
+
+        freq1.sort()
+        freq2.sort()
+
+        for i in range(26):
+            if freq1[i] != freq2[i]:
+                return False
+
+        return True
