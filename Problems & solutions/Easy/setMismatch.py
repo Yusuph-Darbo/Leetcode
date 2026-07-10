@@ -1,3 +1,12 @@
+# Approach:
+# Count the occurrences of every number from 1 to n using a hashmap.
+# Then identify the duplicated number (count of 2) and the missing
+# number (count of 0) by scanning the frequency map.
+#
+# Time: O(n)
+# Space: O(n)
+
+
 class Solution:
     def findErrorNums(self, nums: List[int]) -> List[int]:
         n = len(nums)
