@@ -26,6 +26,4 @@ class Solution:
 
             res = max(res, (r - l + 1))
 
-        print(mapp)
-
         return res
