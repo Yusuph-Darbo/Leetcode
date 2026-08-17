@@ -9,57 +9,43 @@
 
 class Solution:
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
-        n = len(accounts)
-        # Email -> id
-        emailIdx = {}
-        # Set of emails to all accounts
-        emails = []
-        # Email id -> account id
-        emailToAcc = {}
-
-        m = 0
-        for accId, a in enumerate(accounts):
-            for i in range(1, len(a)):
-                email = a[i]
-                if email in emailIdx:
-                    continue
-                emails.append(email)
-                emailIdx[email] = m
-                emailToAcc[m] = accId
-                m += 1
-
-        adj = [[] for _ in range(m)]
-
-        for a in accounts:
-            for i in range(2, len(a)):
-                id1 = emailIdx[a[i]]
-                id2 = emailIdx[a[i - 1]]
-                adj[id1].append(id2)
-                adj[id2].append(id1)
-
-        # index of acc -> list of emails
-        emailGroup = defaultdict(list)
-
-        seen = [False] * m
-
-        def bfs(start, accId):
-            queue = deque([start])
-            seen[start] = True
-            while queue:
-                node = queue.popleft()
-                emailGroup[accId].append(emails[node])
-                for nei in adj[node]:
-                    if not seen[nei]:
-                        seen[nei] = True
-                        queue.append(nei)
-
-        for i in range(m):
-            if not seen[i]:
-                bfs(i, emailToAcc[i])
-
+        emailToName = {}
+        graph = defaultdict(list)
         res = []
-        for accId in emailGroup:
-            name = accounts[accId][0]
-            res.append([name] + sorted(emailGroup[accId]))
+
+        for account in accounts:
+            name = account[0]
+
+            for email in account[1:]:
+                emailToName[email] = name
+
+            first = account[1]
+
+            for email in account[2:]:
+                graph[first].append(email)
+                graph[email].append(first)
+
+        seen = set()
+
+        def bfs(start):
+            q = deque([start])
+            seen.add(start)
+            comp = []
+
+            while q:
+                email = q.popleft()
+                comp.append(email)
+
+                for nei in graph[email]:
+                    if nei not in seen:
+                        q.append(nei)
+                        seen.add(nei)
+
+            return comp
+
+        for email in emailToName:
+            if email not in seen:
+                emails = bfs(email)
+                res.append([emailToName[email]] + sorted(emails))
 
         return res
