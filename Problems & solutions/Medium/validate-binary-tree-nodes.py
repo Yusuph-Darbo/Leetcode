@@ -1,6 +1,6 @@
 # Approach:
 # Track which nodes already have a parent to identify the root. Then use DFS
-# to detect cycles/duplicate visits and finally check that every node was visited.
+# to detect cycles/duplicate visits and finally check that every node was visited
 #
 # Time: O(n)
 # Space: O(n)
