@@ -42,8 +42,5 @@ class Solution(object):
 
             result.append(str(value % 2))
             carry = value // 2
-        
-        return ''.join(result[::-1])
 
-        
-        
+        return "".join(result[::-1])
