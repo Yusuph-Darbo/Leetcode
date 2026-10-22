@@ -1,32 +1,53 @@
 # Approach:
-# Use a stack to handle operator precedence. Parse multi-digit numbers,
-# apply addition and subtraction by pushing signed values, and evaluate
-# multiplication and division immediately using the stack's top element.
-# Sum the stack at the end to obtain the result.
+# Use a single pass to parse numbers and track the previous term. Addition
+# and subtraction update the running result directly, while multiplication
+# and division replace the previous term to respect operator precedence.
 #
 # Time: O(n)
-# Space: O(n)
+# Space: O(1)
 
 
 class Solution:
     def calculate(self, s: str) -> int:
-        op, val = "+", 0
-        stack = []
+        prev = cur = res = 0
+        operation = "+"
+        i = 0
 
-        for i, x in enumerate(s):
-            if x.isdigit():
-                val = 10 * val + int(x)
+        while i < len(s):
+            cur_char = s[i]
 
-            if x in "+-*/" or i == len(s) - 1:
-                if op == "+":
-                    stack.append(val)
-                elif op == "-":
-                    stack.append(-val)
-                elif op == "*":
-                    stack.append(stack.pop() * val)
+            if cur_char.isdigit():
+                while i < len(s) and s[i].isdigit():
+                    cur = cur * 10 + int(s[i])
+                    i += 1
+
+                i -= 1
+
+                if operation == "+":
+                    res += cur
+                    prev = cur
+
+                elif operation == "-":
+                    res -= cur
+                    prev = -cur
+
+                elif operation == "*":
+                    res -= prev
+                    res += cur * prev
+
+                    prev = prev * cur
+
                 else:
-                    stack.append(int(stack.pop() / val))
+                    res -= prev
+                    res += int(prev / cur)
 
-                op, val = x, 0
+                    prev = int(prev / cur)
 
-        return sum(stack)
+                cur = 0
+
+            elif cur_char != " ":
+                operation = cur_char
+
+            i += 1
+
+        return res
